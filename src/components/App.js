@@ -24,6 +24,12 @@ function App() {
     setIsAddPlacePopoutOpen(true);
   };
 
+  const closeAllPopouts = () => {
+    setIsAddPlacePopoutOpen(false);
+    setIsEditAvatarPopoutOpen(false);
+    setIsEditProfilePopoutOpen(false);
+  };
+
   return (
     <div className="body">
       <div className="page">
@@ -35,6 +41,7 @@ function App() {
           onEditAvatarClick={handleEditAvatarClick}
           onEditProfileClick={handleEditProfileClick}
           onAddPlaceClick={handleAddPlaceClick}
+          onClose={closeAllPopouts}
           // onCardClick={() => handleCardClick()}
         ></Main>
         <Footer></Footer>

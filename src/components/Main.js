@@ -4,25 +4,35 @@ import likeButtonPath from "../images/card-like.svg";
 import imageProfilePath from "../images/profile_jacques.jpg";
 import closeButtonPath from "../images/close-icon.svg";
 
+import React from "react";
 import PopoutWithForm from "./PopoutWithForm";
+import api from "../utils/api";
 import ImagePopout from "./ImagePopout";
 
 function Main(props) {
+  const [userName, setUserName] = React.useState("");
+  const [userDescription, setUserDescription] = React.useState("");
+  const [userAvatar, setUserAvatar] = React.useState("");
+
+  React.useEffect(() => {
+    api.getUserInfo().then((data) => {
+      setUserName(data.name);
+      setUserDescription(data.about);
+      setUserAvatar(data.avatar);
+    });
+  });
+
   return (
     <main className="content">
       <div className="content__profile profile">
-        <img
-          className="profile__image"
-          src={imageProfilePath}
-          alt="Explorador"
-        />
+        <img className="profile__image" src={userAvatar} alt="Explorador" />
         <div
           className="profile__image-hover"
           onClick={props.onEditAvatarClick}
         ></div>
         <div className="profile__info">
           <div className="profile__info-top">
-            <h2 className="profile__info-name">Jacques</h2>
+            <h2 className="profile__info-name">{userName}</h2>
             <button
               className="profile__button-edit"
               onClick={props.onEditProfileClick}
@@ -30,7 +40,7 @@ function Main(props) {
               <img src={editButtonPath} alt="Botón editar" />
             </button>
           </div>
-          <p className="profile__info-subtitle">Explorador</p>
+          <p className="profile__info-subtitle">{userDescription}</p>
         </div>
         <button
           className="profile__button-add"
@@ -42,6 +52,7 @@ function Main(props) {
         name={"edit"}
         title={"Acerca de ti"}
         isOpen={props.isEditProfilePopoutOpen}
+        onClose={props.onClose}
       >
         <input
           className="popout-edit__form-name form__input"
@@ -70,6 +81,7 @@ function Main(props) {
         name={"add"}
         title={"Añadir nuevo lugar"}
         isOpen={props.isAddPlacePopoutOpen}
+        onClose={props.onClose}
       >
         <input
           className="popout-add__form-title form__input"
@@ -96,6 +108,7 @@ function Main(props) {
         name={"profile"}
         title={"Cambiar foto de perfil"}
         isOpen={props.isEditAvatarPopoutOpen}
+        onClose={props.onClose}
       >
         <input
           className="popout-profile__form-url form__input"
@@ -234,7 +247,17 @@ function Main(props) {
           </div>
         </div>
       </template>
-      <div id="overlay"></div>
+      <div
+        id="overlay"
+        className={
+          props.isAddPlacePopoutOpen ||
+          props.isEditAvatarPopoutOpen ||
+          props.isEditProfilePopoutOpen
+            ? "active"
+            : ""
+        }
+        onClick={props.onClose}
+      ></div>
     </main>
   );
 }
