@@ -1,18 +1,17 @@
 import editButtonPath from "../images/Edit-Button.svg";
-import deleteButtonPath from "../images/card-trash.svg";
-import likeButtonPath from "../images/card-like.svg";
-import imageProfilePath from "../images/profile_jacques.jpg";
 import closeButtonPath from "../images/close-icon.svg";
 
 import React from "react";
 import PopoutWithForm from "./PopoutWithForm";
 import api from "../utils/api";
 import ImagePopout from "./ImagePopout";
+import { Card } from "./Card";
 
 function Main(props) {
   const [userName, setUserName] = React.useState("");
   const [userDescription, setUserDescription] = React.useState("");
   const [userAvatar, setUserAvatar] = React.useState("");
+  const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
     api.getUserInfo().then((data) => {
@@ -20,7 +19,10 @@ function Main(props) {
       setUserDescription(data.about);
       setUserAvatar(data.avatar);
     });
-  });
+    api.getInitialCards().then((data) => {
+      setCards(data);
+    });
+  }, []);
 
   return (
     <main className="content">
@@ -47,7 +49,11 @@ function Main(props) {
           onClick={props.onAddPlaceClick}
         ></button>
       </div>
-      <div className="content__cards cards"></div>
+      <div className="content__cards cards">
+        {cards.map((card) => {
+          return <Card card={card}></Card>;
+        })}
+      </div>
       <PopoutWithForm
         name={"edit"}
         title={"Acerca de ti"}
@@ -123,102 +129,6 @@ function Main(props) {
         <span className="span-url-error form__input-error"></span>
       </PopoutWithForm>
       <ImagePopout name={"image"} title={"Título imagen"}></ImagePopout>
-      {/* <div className="popout-edit">
-        <h4 className="popout-edit__title">Editar perfil</h4>
-        <button className="popout-edit__button-close" type="submit">
-          <img src={closeButtonPath} alt="Boton de cerrar" className="close" />
-        </button>
-        <form className="popout-edit__form form">
-          <input
-            className="popout-edit__form-name form__input"
-            name="profileName"
-            placeholder="Nombre"
-            type="text"
-            required
-            minLength="2"
-            maxLength="40"
-            data-error="span-name"
-          />
-          <span className="span-name-error form__input-error"></span>
-          <input
-            className="popout-edit__form-text form__input"
-            name="profileAbout"
-            placeholder="Acerca de ti"
-            type="text"
-            required
-            minLength="2"
-            maxLength="200"
-            data-error="span-text"
-          />
-          <span className="span-text-error form__input-error"></span>
-          <button
-            className="popout-edit__button-save form__submit"
-            type="submit"
-          ></button>
-        </form>
-      </div> */}
-      {/* <div className="popout-add">
-        <h4 className="popout-add__title">Nuevo lugar</h4>
-        <button className="popout-add__button-close" type="submit">
-          <img src={closeButtonPath} alt="Boton de cerrar" className="close" />
-        </button>
-        <form className="popout-add__form form" noValidate>
-          <input
-            className="popout-add__form-title form__input"
-            name="cardTitle"
-            placeholder="Título"
-            type="text"
-            required
-            minLength="2"
-            maxLength="30"
-            data-error="span-title"
-          />
-          <span className="span-title-error form__input-error"></span>
-          <input
-            className="popout-add__form-url form__input"
-            name="cardUrl"
-            placeholder="Enlace a la imagen"
-            type="url"
-            required
-            data-error="span-url"
-          />
-          <span className="span-url-error form__input-error"></span>
-          <button
-            className="popout-add__button-save form__submit"
-            type="submit"
-          ></button>
-        </form>
-      </div> */}
-      {/* <div className="popout-image">
-        <button className="popout-image__button-close" type="submit">
-          <img src={closeButtonPath} alt="Boton de cerrar" className="close" />
-        </button>
-        <img className="popout-image__image" src=" " alt="" />
-        <p className="popout-image__title"></p>
-      </div> */}
-      {/* <div className="popout-profile">
-        <h4 className="popout-profile__title">Cambiar foto de perfil</h4>
-        <button className="popout-profile__button-close" type="submit">
-          <img src={closeButtonPath} alt="Boton de cerrar" className="close" />
-        </button>
-        <form className="popout-profile__form form" noValidate>
-          <input
-            className="popout-profile__form-url form__input"
-            name="avatarUrl"
-            placeholder="Enlace a la imagen"
-            type="url"
-            required
-            minLength="2"
-            maxLength="100"
-            data-error="span-url"
-          />
-          <span className="span-url-error form__input-error"></span>
-          <button
-            className="popout-profile__button-save form__submit"
-            type="submit"
-          ></button>
-        </form>
-      </div> */}
       <div className="popout-confirm">
         <h4 className="popout-confirm__title">¿Estás seguro?</h4>
         <button className="popout-confirm__button-close" type="submit">
@@ -228,25 +138,7 @@ function Main(props) {
           Si
         </button>
       </div>
-      <template id="card">
-        <div className="card">
-          <div className="card__top">
-            <button className="card__button-trash" id="button-trash">
-              <img src={deleteButtonPath} alt="Botón eliminar" />
-            </button>
-            <img className="card__image" src=" " alt="" />
-          </div>
-          <div className="card__bottom">
-            <h2 className="card__title"></h2>
-            <div className="card__button">
-              <button className="card__button-like">
-                <img src={likeButtonPath} alt="Botón like" />
-              </button>
-              <label className="card__button-counter">0</label>
-            </div>
-          </div>
-        </div>
-      </template>
+
       <div
         id="overlay"
         className={

@@ -11,3 +11,8 @@
   align-items: center;
   padding-bottom: 120px;
 }
+
+.content {
+  max-width: 880px;
+  width: 100%;
+}
