@@ -4,16 +4,25 @@ import deleteButtonPath from "../images/card-trash.svg";
 import likeButtonPath from "../images/card-like.svg";
 
 export const Card = (props) => {
+  //handle que ejecuta la propiedad.
+  const handleCardClick = () => {
+    props.onCardClick(props.card);
+  };
   return (
     <div className="card">
       <div className="card__top">
-        <button className="card__button-trash" id="button-trash">
+        <button
+          className="card__button-trash"
+          id="button-trash"
+          onClick={props.onDeleteCardClick}
+        >
           <img src={deleteButtonPath} alt="Botón eliminar" />
         </button>
         <img
           className="card__image"
           src={props.card.link}
           alt={props.card.name}
+          onClick={handleCardClick}
         />
       </div>
       <div className="card__bottom">

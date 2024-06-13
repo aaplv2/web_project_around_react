@@ -3,8 +3,8 @@ import closeButtonPath from "../images/close-icon.svg";
 
 import React from "react";
 import PopoutWithForm from "./PopoutWithForm";
-import api from "../utils/api";
 import ImagePopout from "./ImagePopout";
+import api from "../utils/api";
 import { Card } from "./Card";
 
 function Main(props) {
@@ -23,7 +23,6 @@ function Main(props) {
       setCards(data);
     });
   }, []);
-
   return (
     <main className="content">
       <div className="content__profile profile">
@@ -51,7 +50,14 @@ function Main(props) {
       </div>
       <div className="content__cards cards">
         {cards.map((card) => {
-          return <Card card={card}></Card>;
+          return (
+            <Card
+              card={card}
+              onCardClick={props.onCardClick}
+              key={card._id}
+              onDeleteCardClick={props.onDeleteCardClick}
+            ></Card>
+          );
         })}
       </div>
       <PopoutWithForm
@@ -128,23 +134,24 @@ function Main(props) {
         />
         <span className="span-url-error form__input-error"></span>
       </PopoutWithForm>
-      <ImagePopout name={"image"} title={"Título imagen"}></ImagePopout>
-      <div className="popout-confirm">
-        <h4 className="popout-confirm__title">¿Estás seguro?</h4>
-        <button className="popout-confirm__button-close" type="submit">
-          <img src={closeButtonPath} alt="Boton de cerrar" className="close" />
-        </button>
-        <button className="popout-confirm__button" type="submit">
-          Si
-        </button>
-      </div>
-
+      <PopoutWithForm
+        name={"confirm"}
+        title={"¿Estas seguro?"}
+        onClose={props.onClose}
+        isOpen={props.isDeleteCardOpen}
+      ></PopoutWithForm>
+      <ImagePopout
+        card={props.selectedCard}
+        onClose={props.onClose}
+      ></ImagePopout>
       <div
         id="overlay"
         className={
           props.isAddPlacePopoutOpen ||
           props.isEditAvatarPopoutOpen ||
-          props.isEditProfilePopoutOpen
+          props.isEditProfilePopoutOpen ||
+          props.selectedCard.link ||
+          props.isDeleteCardOpen
             ? "active"
             : ""
         }

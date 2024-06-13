@@ -41,7 +41,7 @@
   opacity: 50%;
 }
 
-.popout-confirm__button {
+.popout-confirm__button-save {
   margin-top: 38px;
   border: 0;
   background-color: black;
@@ -51,9 +51,10 @@
   line-height: 22px;
   padding-top: 14px;
   padding-bottom: 14px;
+  width: 100%;
 }
 
-.popout-confirm__button:hover {
+.popout-confirm__button-save:hover {
   opacity: 80%;
 }
 
