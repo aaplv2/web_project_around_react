@@ -1,8 +1,8 @@
 import editButtonPath from "../images/Edit-Button.svg";
 
 import React from "react";
-import PopoutWithForm from "./PopoutWithForm";
-import ImagePopout from "./ImagePopout";
+import PopupWithForm from "./PopupWithForm";
+import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import { Card } from "./Card";
 
@@ -59,7 +59,7 @@ function Main(props) {
           );
         })}
       </div>
-      <PopoutWithForm
+      <PopupWithForm
         name={"edit"}
         title={"Acerca de ti"}
         isOpen={props.isEditProfilePopoutOpen}
@@ -87,8 +87,8 @@ function Main(props) {
           data-error="span-text"
         />
         <span className="span-text-error form__input-error"></span>
-      </PopoutWithForm>
-      <PopoutWithForm
+      </PopupWithForm>
+      <PopupWithForm
         name={"add"}
         title={"Añadir nuevo lugar"}
         isOpen={props.isAddPlacePopoutOpen}
@@ -114,8 +114,8 @@ function Main(props) {
           data-error="span-url"
         />
         <span className="span-url-error form__input-error"></span>
-      </PopoutWithForm>
-      <PopoutWithForm
+      </PopupWithForm>
+      <PopupWithForm
         name={"profile"}
         title={"Cambiar foto de perfil"}
         isOpen={props.isEditAvatarPopoutOpen}
@@ -132,17 +132,17 @@ function Main(props) {
           data-error="span-url"
         />
         <span className="span-url-error form__input-error"></span>
-      </PopoutWithForm>
-      <PopoutWithForm
+      </PopupWithForm>
+      <PopupWithForm
         name={"confirm"}
         title={"¿Estas seguro?"}
         onClose={props.onClose}
         isOpen={props.isDeleteCardOpen}
-      ></PopoutWithForm>
-      <ImagePopout
+      ></PopupWithForm>
+      <ImagePopup
         card={props.selectedCard}
         onClose={props.onClose}
-      ></ImagePopout>
+      ></ImagePopup>
       <div
         id="overlay"
         className={
