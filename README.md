@@ -54,7 +54,7 @@
 
 ![perfil](https://i.imgur.com/xCrOxvb.jpeg)
 
-![likescarta](https://imgur.com/a/pnuze1T.jpeg)
+![likescarta](https://i.imgur.com/UYoIYJH.jpeg)
 
 ## Autor
 
