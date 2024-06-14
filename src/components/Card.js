@@ -3,7 +3,7 @@ import React from "react";
 import deleteButtonPath from "../images/card-trash.svg";
 import likeButtonPath from "../images/card-like.svg";
 
-export const Card = (props) => {
+const Card = (props) => {
   const handleCardClick = () => {
     props.onCardClick(props.card);
   };
@@ -38,3 +38,5 @@ export const Card = (props) => {
     </div>
   );
 };
+
+export default Card;
