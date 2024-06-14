@@ -1,7 +1,7 @@
 import React from "react";
 import closeButtonPath from "../images/close-icon.svg";
 
-function PopoutWithForm(props) {
+function PopupWithForm(props) {
   React.useEffect(() => {
     function escapeKeydown(evt) {
       if (evt.key === "Escape") {
@@ -41,4 +41,4 @@ function PopoutWithForm(props) {
   );
 }
 
-export default PopoutWithForm;
+export default PopupWithForm;
