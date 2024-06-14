@@ -1,5 +1,4 @@
 import editButtonPath from "../images/Edit-Button.svg";
-import closeButtonPath from "../images/close-icon.svg";
 
 import React from "react";
 import PopoutWithForm from "./PopoutWithForm";

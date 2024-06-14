@@ -4,7 +4,6 @@ import deleteButtonPath from "../images/card-trash.svg";
 import likeButtonPath from "../images/card-like.svg";
 
 export const Card = (props) => {
-  //handle que ejecuta la propiedad.
   const handleCardClick = () => {
     props.onCardClick(props.card);
   };
