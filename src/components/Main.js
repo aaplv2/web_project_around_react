@@ -4,7 +4,7 @@ import React from "react";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
-import { Card } from "./Card";
+import Card from "./Card";
 
 function Main(props) {
   const [userName, setUserName] = React.useState("");
