@@ -1,18 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
+import api from "../utils/api.js";
 
 import "../index.css";
+import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
+import { CurrentCardContext } from "../contexts/CurrentCardContext.js";
 
 function App() {
-  const [isAddPlacePopoutOpen, setIsAddPlacePopoutOpen] = React.useState(false);
-  const [isEditAvatarPopoutOpen, setIsEditAvatarPopoutOpen] =
-    React.useState(false);
-  const [isEditProfilePopoutOpen, setIsEditProfilePopoutOpen] =
-    React.useState(false);
-  const [isDeleteCardOpen, setIsDeleteCardOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({});
+  const [isAddPlacePopoutOpen, setIsAddPlacePopoutOpen] = useState(false);
+  const [isEditAvatarPopoutOpen, setIsEditAvatarPopoutOpen] = useState(false);
+  const [isEditProfilePopoutOpen, setIsEditProfilePopoutOpen] = useState(false);
+  const [isDeleteCardOpen, setIsDeleteCardOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({});
+  const [currentUser, setCurrentUser] = useState();
+  const [currentCards, setCurrentCards] = useState();
+
+  useEffect(() => {
+    api.getUserInfo().then((data) => {
+      setCurrentUser(data);
+    });
+    api.getInitialCards().then((data) => {
+      setCurrentCards(data);
+    });
+  }, []);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopoutOpen(true);
@@ -42,26 +54,53 @@ function App() {
     setSelectedCard({});
   };
 
+  const handleCardLike = (card) => {
+    const isLiked = card.likes.some((cardId) => cardId._id === currentUser._id);
+    api.handleLike(card._id, !isLiked).then((newCard) => {
+      setCurrentCards((cardState) =>
+        cardState.map((c) => (c._id === card._id ? newCard : c))
+      );
+    });
+  };
+
+  const handleCardDelete = (card) => {
+    // api.deleteCard(card._id);
+    const newCards = currentCards.filter((c) => {
+      if (card._id === c._id) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+    setCurrentCards(newCards);
+  };
+
   return (
-    <div className="body">
-      <div className="page">
-        <Header></Header>
-        <Main
-          isEditAvatarPopoutOpen={isEditAvatarPopoutOpen}
-          isEditProfilePopoutOpen={isEditProfilePopoutOpen}
-          isAddPlacePopoutOpen={isAddPlacePopoutOpen}
-          isDeleteCardOpen={isDeleteCardOpen}
-          selectedCard={selectedCard}
-          onEditAvatarClick={handleEditAvatarClick}
-          onEditProfileClick={handleEditProfileClick}
-          onAddPlaceClick={handleAddPlaceClick}
-          onDeleteCardClick={handleDeleteCardClick}
-          onCardClick={handleCardClick}
-          onClose={closeAllPopouts}
-        ></Main>
-        <Footer></Footer>
-      </div>
-    </div>
+    <CurrentUserContext.Provider value={currentUser}>
+      <CurrentCardContext.Provider value={currentCards}>
+        <div className="body">
+          <div className="page">
+            <Header></Header>
+            <Main
+              isEditAvatarPopoutOpen={isEditAvatarPopoutOpen}
+              isEditProfilePopoutOpen={isEditProfilePopoutOpen}
+              isAddPlacePopoutOpen={isAddPlacePopoutOpen}
+              isDeleteCardOpen={isDeleteCardOpen}
+              selectedCard={selectedCard}
+              onEditAvatarClick={handleEditAvatarClick}
+              onEditProfileClick={handleEditProfileClick}
+              onAddPlaceClick={handleAddPlaceClick}
+              onDeleteCardClick={handleDeleteCardClick}
+              onCardClick={handleCardClick}
+              onClose={closeAllPopouts}
+              handleCardLike={handleCardLike}
+              handleCardDelete={handleCardDelete}
+            ></Main>
+            <Footer></Footer>
+          </div>
+        </div>
+      </CurrentCardContext.Provider>
+    </CurrentUserContext.Provider>
   );
 }
 

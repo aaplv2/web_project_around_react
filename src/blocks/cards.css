@@ -37,6 +37,10 @@
   mix-blend-mode: difference;
 }
 
+.card__button-trash.hidden {
+  visibility: hidden;
+}
+
 .card__button-trash:hover {
   opacity: 60%;
 }

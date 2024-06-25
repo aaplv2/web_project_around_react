@@ -1,38 +1,32 @@
 import editButtonPath from "../images/Edit-Button.svg";
 
-import React from "react";
+import React, { useContext } from "react";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
-import api from "../utils/api";
 import Card from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { CurrentCardContext } from "../contexts/CurrentCardContext";
+import api from "../utils/api";
 
 function Main(props) {
-  const [userName, setUserName] = React.useState("");
-  const [userDescription, setUserDescription] = React.useState("");
-  const [userAvatar, setUserAvatar] = React.useState("");
-  const [cards, setCards] = React.useState([]);
+  const currentUser = useContext(CurrentUserContext);
+  const currentCard = useContext(CurrentCardContext);
 
-  React.useEffect(() => {
-    api.getUserInfo().then((data) => {
-      setUserName(data.name);
-      setUserDescription(data.about);
-      setUserAvatar(data.avatar);
-    });
-    api.getInitialCards().then((data) => {
-      setCards(data);
-    });
-  }, []);
   return (
     <main className="content">
       <div className="content__profile profile">
-        <img className="profile__image" src={userAvatar} alt="Explorador" />
+        <img
+          className="profile__image"
+          src={currentUser?.avatar}
+          alt="Explorador"
+        />
         <div
           className="profile__image-hover"
           onClick={props.onEditAvatarClick}
         ></div>
         <div className="profile__info">
           <div className="profile__info-top">
-            <h2 className="profile__info-name">{userName}</h2>
+            <h2 className="profile__info-name">{currentUser?.name}</h2>
             <button
               className="profile__button-edit"
               onClick={props.onEditProfileClick}
@@ -40,7 +34,7 @@ function Main(props) {
               <img src={editButtonPath} alt="Botón editar" />
             </button>
           </div>
-          <p className="profile__info-subtitle">{userDescription}</p>
+          <p className="profile__info-subtitle">{currentUser?.about}</p>
         </div>
         <button
           className="profile__button-add"
@@ -48,13 +42,15 @@ function Main(props) {
         ></button>
       </div>
       <div className="content__cards cards">
-        {cards.map((card) => {
+        {currentCard?.map((card) => {
           return (
             <Card
               card={card}
               onCardClick={props.onCardClick}
               key={card._id}
               onDeleteCardClick={props.onDeleteCardClick}
+              onCardLike={props.handleCardLike}
+              onCardDelete={props.handleCardDelete}
             ></Card>
           );
         })}
