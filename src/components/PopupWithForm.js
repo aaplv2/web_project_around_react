@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import closeButtonPath from "../images/close-icon.svg";
 
 function PopupWithForm(props) {
-  React.useEffect(() => {
+  useEffect(() => {
     function escapeKeydown(evt) {
       if (evt.key === "Escape") {
         props.onClose();

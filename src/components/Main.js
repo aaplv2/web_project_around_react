@@ -1,12 +1,15 @@
 import editButtonPath from "../images/Edit-Button.svg";
 
 import React, { useContext } from "react";
-import PopupWithForm from "./PopupWithForm";
+
 import ImagePopup from "./ImagePopup";
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { CurrentCardContext } from "../contexts/CurrentCardContext";
-import api from "../utils/api";
+import { EditProfilePopup } from "./EditProfilePopup";
+import { AddPlacePopup } from "./AddPlacePopup";
+import { EditAvatarPopup } from "./EditAvatarPopup";
+import { DeleteCardPopup } from "./DeleteCardPopup";
 
 function Main(props) {
   const currentUser = useContext(CurrentUserContext);
@@ -55,86 +58,22 @@ function Main(props) {
           );
         })}
       </div>
-      <PopupWithForm
-        name={"edit"}
-        title={"Acerca de ti"}
+      <EditProfilePopup
         isOpen={props.isEditProfilePopoutOpen}
         onClose={props.onClose}
-      >
-        <input
-          className="popout-edit__form-name form__input"
-          name="profileName"
-          placeholder="Nombre"
-          type="text"
-          required
-          minLength="2"
-          maxLength="40"
-          data-error="span-name"
-        />
-        <span className="span-name-error form__input-error"></span>
-        <input
-          className="popout-edit__form-text form__input"
-          name="profileAbout"
-          placeholder="Acerca de ti"
-          type="text"
-          required
-          minLength="2"
-          maxLength="200"
-          data-error="span-text"
-        />
-        <span className="span-text-error form__input-error"></span>
-      </PopupWithForm>
-      <PopupWithForm
-        name={"add"}
-        title={"Añadir nuevo lugar"}
+      ></EditProfilePopup>
+      <AddPlacePopup
         isOpen={props.isAddPlacePopoutOpen}
         onClose={props.onClose}
-      >
-        <input
-          className="popout-add__form-title form__input"
-          name="cardTitle"
-          placeholder="Título"
-          type="text"
-          required
-          minLength="2"
-          maxLength="30"
-          data-error="span-title"
-        />
-        <span className="span-title-error form__input-error"></span>
-        <input
-          className="popout-add__form-url form__input"
-          name="cardUrl"
-          placeholder="Enlace a la imagen"
-          type="url"
-          required
-          data-error="span-url"
-        />
-        <span className="span-url-error form__input-error"></span>
-      </PopupWithForm>
-      <PopupWithForm
-        name={"profile"}
-        title={"Cambiar foto de perfil"}
+      ></AddPlacePopup>
+      <EditAvatarPopup
         isOpen={props.isEditAvatarPopoutOpen}
         onClose={props.onClose}
-      >
-        <input
-          className="popout-profile__form-url form__input"
-          name="avatarUrl"
-          placeholder="Enlace a la imagen"
-          type="url"
-          required
-          minLength="2"
-          maxLength="100"
-          data-error="span-url"
-        />
-        <span className="span-url-error form__input-error"></span>
-      </PopupWithForm>
-      <PopupWithForm
-        name={"confirm"}
-        title={"¿Estas seguro?"}
-        onClose={props.onClose}
+      ></EditAvatarPopup>
+      <DeleteCardPopup
         isOpen={props.isDeleteCardOpen}
-      ></PopupWithForm>
+        onClose={props.onClose}
+      ></DeleteCardPopup>
       <ImagePopup
         card={props.selectedCard}
         onClose={props.onClose}

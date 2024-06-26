@@ -64,7 +64,7 @@ function App() {
   };
 
   const handleCardDelete = (card) => {
-    // api.deleteCard(card._id);
+    // api.deleteCard(card._id).then(()=>{})
     const newCards = currentCards.filter((c) => {
       if (card._id === c._id) {
         return false;

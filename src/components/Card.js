@@ -30,7 +30,8 @@ const Card = (props) => {
         <button
           className={`card__button-trash ${isOwn ? "" : "hidden"}`}
           id="button-trash"
-          onClick={handleDeleteClick}
+          onClick={props.onDeleteCardClick}
+          // onClick={handleDeleteClick}
         >
           <img src={deleteButtonPath} alt="Botón eliminar" />
         </button>
