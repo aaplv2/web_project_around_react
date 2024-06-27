@@ -27,7 +27,10 @@ function PopupWithForm(props) {
         >
           <img src={closeButtonPath} alt="Boton de cerrar" className="close" />
         </button>
-        <form className={`popout-${props.name}__form form`}>
+        <form
+          className={`popout-${props.name}__form form`}
+          onSubmit={props.onSubmit}
+        >
           {props.children}
           <button
             className={`popout-${props.name}__button-save form__submit`}

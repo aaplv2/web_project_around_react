@@ -61,14 +61,17 @@ function Main(props) {
       <EditProfilePopup
         isOpen={props.isEditProfilePopoutOpen}
         onClose={props.onClose}
+        onUpdateUser={props.onUpdateUser}
       ></EditProfilePopup>
       <AddPlacePopup
         isOpen={props.isAddPlacePopoutOpen}
         onClose={props.onClose}
+        onAddPlace={props.onAddPlace}
       ></AddPlacePopup>
       <EditAvatarPopup
         isOpen={props.isEditAvatarPopoutOpen}
         onClose={props.onClose}
+        onUpdateAvatar={props.onUpdateAvatar}
       ></EditAvatarPopup>
       <DeleteCardPopup
         isOpen={props.isDeleteCardOpen}

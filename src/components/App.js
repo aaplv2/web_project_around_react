@@ -64,15 +64,37 @@ function App() {
   };
 
   const handleCardDelete = (card) => {
-    // api.deleteCard(card._id).then(()=>{})
-    const newCards = currentCards.filter((c) => {
-      if (card._id === c._id) {
-        return false;
-      } else {
-        return true;
-      }
+    api.deleteCard(card._id).then(() => {
+      const newCards = currentCards.filter((c) => {
+        if (card._id === c._id) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+      setCurrentCards(newCards);
     });
-    setCurrentCards(newCards);
+  };
+
+  const handleUpdateUser = (user) => {
+    api.updateUserInfo(user.name, user.about).then((newUser) => {
+      setCurrentUser(newUser);
+      closeAllPopouts();
+    });
+  };
+
+  const handleAvatarUpdate = ({ avatar }) => {
+    api.updateAvatar(avatar).then(() => {
+      setCurrentUser({ ...currentUser, avatar: avatar });
+      closeAllPopouts();
+    });
+  };
+
+  const handleAddPlace = ({ name, link }) => {
+    api.addCard(name, link).then((newCard) => {
+      setCurrentCards([...currentCards, newCard]);
+      closeAllPopouts();
+    });
   };
 
   return (
@@ -93,6 +115,9 @@ function App() {
               onDeleteCardClick={handleDeleteCardClick}
               onCardClick={handleCardClick}
               onClose={closeAllPopouts}
+              onUpdateUser={handleUpdateUser}
+              onUpdateAvatar={handleAvatarUpdate}
+              onAddPlace={handleAddPlace}
               handleCardLike={handleCardLike}
               handleCardDelete={handleCardDelete}
             ></Main>
