@@ -53,7 +53,6 @@ function Main(props) {
               key={card._id}
               onDeleteCardClick={props.onDeleteCardClick}
               onCardLike={props.handleCardLike}
-              onCardDelete={props.handleCardDelete}
             ></Card>
           );
         })}
@@ -76,8 +75,11 @@ function Main(props) {
       <DeleteCardPopup
         isOpen={props.isDeleteCardOpen}
         onClose={props.onClose}
+        onCardDelete={props.onCardDelete}
+        card={props.selectedCard}
       ></DeleteCardPopup>
       <ImagePopup
+        isOpen={props.isZoomImageOpen}
         card={props.selectedCard}
         onClose={props.onClose}
       ></ImagePopup>

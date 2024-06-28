@@ -28,6 +28,8 @@ export function EditProfilePopup(props) {
       name,
       about: description,
     });
+    setName("");
+    setDescription("");
   };
 
   return (

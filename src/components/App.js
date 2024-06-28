@@ -7,12 +7,14 @@ import api from "../utils/api.js";
 import "../index.css";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import { CurrentCardContext } from "../contexts/CurrentCardContext.js";
+import { PopupContext } from "../contexts/PopupProvider.js";
 
 function App() {
   const [isAddPlacePopoutOpen, setIsAddPlacePopoutOpen] = useState(false);
   const [isEditAvatarPopoutOpen, setIsEditAvatarPopoutOpen] = useState(false);
   const [isEditProfilePopoutOpen, setIsEditProfilePopoutOpen] = useState(false);
   const [isDeleteCardOpen, setIsDeleteCardOpen] = useState(false);
+  const [isZoomImageOpen, setIsZoomImageOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [currentCards, setCurrentCards] = useState([]);
@@ -38,19 +40,21 @@ function App() {
     setIsAddPlacePopoutOpen(true);
   };
 
-  const handleCardClick = (card) => {
+  const handleDeleteCardClick = (card) => {
     setSelectedCard(card);
-  };
-
-  const handleDeleteCardClick = () => {
     setIsDeleteCardOpen(true);
   };
 
+  const handleZoomImageClick = (card) => {
+    setSelectedCard(card);
+    setIsZoomImageOpen(true);
+  };
   const closeAllPopouts = () => {
     setIsAddPlacePopoutOpen(false);
     setIsEditAvatarPopoutOpen(false);
     setIsEditProfilePopoutOpen(false);
     setIsDeleteCardOpen(false);
+    setIsZoomImageOpen(false);
     setSelectedCard({});
   };
 
@@ -73,6 +77,7 @@ function App() {
         }
       });
       setCurrentCards(newCards);
+      closeAllPopouts();
     });
   };
 
@@ -100,30 +105,33 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <CurrentCardContext.Provider value={currentCards}>
-        <div className="body">
-          <div className="page">
-            <Header></Header>
-            <Main
-              isEditAvatarPopoutOpen={isEditAvatarPopoutOpen}
-              isEditProfilePopoutOpen={isEditProfilePopoutOpen}
-              isAddPlacePopoutOpen={isAddPlacePopoutOpen}
-              isDeleteCardOpen={isDeleteCardOpen}
-              selectedCard={selectedCard}
-              onEditAvatarClick={handleEditAvatarClick}
-              onEditProfileClick={handleEditProfileClick}
-              onAddPlaceClick={handleAddPlaceClick}
-              onDeleteCardClick={handleDeleteCardClick}
-              onCardClick={handleCardClick}
-              onClose={closeAllPopouts}
-              onUpdateUser={handleUpdateUser}
-              onUpdateAvatar={handleAvatarUpdate}
-              onAddPlace={handleAddPlace}
-              handleCardLike={handleCardLike}
-              handleCardDelete={handleCardDelete}
-            ></Main>
-            <Footer></Footer>
+        <PopupContext.Provider value={selectedCard}>
+          <div className="body">
+            <div className="page">
+              <Header></Header>
+              <Main
+                isEditAvatarPopoutOpen={isEditAvatarPopoutOpen}
+                isEditProfilePopoutOpen={isEditProfilePopoutOpen}
+                isAddPlacePopoutOpen={isAddPlacePopoutOpen}
+                isDeleteCardOpen={isDeleteCardOpen}
+                isZoomImageOpen={isZoomImageOpen}
+                selectedCard={selectedCard}
+                onEditAvatarClick={handleEditAvatarClick}
+                onEditProfileClick={handleEditProfileClick}
+                onAddPlaceClick={handleAddPlaceClick}
+                onDeleteCardClick={handleDeleteCardClick}
+                onCardClick={handleZoomImageClick}
+                onClose={closeAllPopouts}
+                onUpdateUser={handleUpdateUser}
+                onUpdateAvatar={handleAvatarUpdate}
+                onAddPlace={handleAddPlace}
+                handleCardLike={handleCardLike}
+                onCardDelete={handleCardDelete}
+              ></Main>
+              <Footer></Footer>
+            </div>
           </div>
-        </div>
+        </PopupContext.Provider>
       </CurrentCardContext.Provider>
     </CurrentUserContext.Provider>
   );
