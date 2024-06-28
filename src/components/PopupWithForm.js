@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import closeButtonPath from "../images/close-icon.svg";
 
 function PopupWithForm(props) {
@@ -8,9 +8,7 @@ function PopupWithForm(props) {
         props.onClose();
       }
     }
-
     document.addEventListener("keydown", escapeKeydown);
-
     return () => {
       document.removeEventListener("keydown", escapeKeydown);
     };

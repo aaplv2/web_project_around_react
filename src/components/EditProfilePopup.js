@@ -6,6 +6,8 @@ export function EditProfilePopup(props) {
   const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
 
   useEffect(() => {
     if (currentUser?.name) {
@@ -16,10 +18,20 @@ export function EditProfilePopup(props) {
 
   const handleNameChange = (e) => {
     setName(e.target.value);
+    if (!e.target.validity.valid) {
+      setNameError(e.target.validationMessage);
+    } else {
+      setNameError("");
+    }
   };
 
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
+    if (!e.target.validity.valid) {
+      setDescriptionError(e.target.validationMessage);
+    } else {
+      setDescriptionError("");
+    }
   };
 
   const handleSubmit = (e) => {
@@ -28,8 +40,6 @@ export function EditProfilePopup(props) {
       name,
       about: description,
     });
-    setName("");
-    setDescription("");
   };
 
   return (
@@ -52,7 +62,9 @@ export function EditProfilePopup(props) {
         value={name}
         onChange={handleNameChange}
       />
-      <span className="span-name-error form__input-error"></span>
+      <span className="span-name-error form__input-error">
+        {nameError ? nameError : null}
+      </span>
       <input
         className="popout-edit__form-text form__input"
         name="profileAbout"
@@ -65,7 +77,9 @@ export function EditProfilePopup(props) {
         value={description}
         onChange={handleDescriptionChange}
       />
-      <span className="span-text-error form__input-error"></span>
+      <span className="span-text-error form__input-error">
+        {descriptionError ? descriptionError : null}
+      </span>
     </PopupWithForm>
   );
 }

@@ -4,13 +4,25 @@ import React, { useState } from "react";
 export function AddPlacePopup(props) {
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [linkError, setLinkError] = useState("");
 
   const handleNameChange = (e) => {
     setName(e.target.value);
+    if (!e.target.validity.valid) {
+      setNameError(e.target.validationMessage);
+    } else {
+      setNameError("");
+    }
   };
 
   const handleLinkChange = (e) => {
     setLink(e.target.value);
+    if (!e.target.validity.valid) {
+      setLinkError(e.target.validationMessage);
+    } else {
+      setLinkError("");
+    }
   };
 
   const handleSubmit = (e) => {
@@ -39,7 +51,9 @@ export function AddPlacePopup(props) {
         value={name}
         onChange={handleNameChange}
       />
-      <span className="span-title-error form__input-error"></span>
+      <span className="span-title-error form__input-error">
+        {nameError ? nameError : null}
+      </span>
       <input
         className="popout-add__form-url form__input"
         name="cardUrl"
@@ -50,7 +64,10 @@ export function AddPlacePopup(props) {
         value={link}
         onChange={handleLinkChange}
       />
-      <span className="span-url-error form__input-error"></span>
+
+      <span className="span-url-error form__input-error">
+        {linkError ? linkError : null}
+      </span>
     </PopupWithForm>
   );
 }
