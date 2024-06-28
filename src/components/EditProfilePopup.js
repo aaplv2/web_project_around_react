@@ -8,8 +8,10 @@ export function EditProfilePopup(props) {
   const [description, setDescription] = useState("");
 
   useEffect(() => {
-    setName(currentUser?.name);
-    setDescription(currentUser?.about);
+    if (currentUser?.name) {
+      setName(currentUser?.name);
+      setDescription(currentUser?.about);
+    }
   }, [currentUser]);
 
   const handleNameChange = (e) => {

@@ -14,8 +14,8 @@ function App() {
   const [isEditProfilePopoutOpen, setIsEditProfilePopoutOpen] = useState(false);
   const [isDeleteCardOpen, setIsDeleteCardOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
-  const [currentUser, setCurrentUser] = useState();
-  const [currentCards, setCurrentCards] = useState();
+  const [currentUser, setCurrentUser] = useState({});
+  const [currentCards, setCurrentCards] = useState([]);
 
   useEffect(() => {
     api.getUserInfo().then((data) => {
@@ -92,7 +92,7 @@ function App() {
 
   const handleAddPlace = ({ name, link }) => {
     api.addCard(name, link).then((newCard) => {
-      setCurrentCards([...currentCards, newCard]);
+      setCurrentCards([newCard, ...currentCards]);
       closeAllPopouts();
     });
   };
