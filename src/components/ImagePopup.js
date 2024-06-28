@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import closeButtonPath from "../images/close-icon.svg";
 
 function ImagePopup(props) {
-  React.useEffect(() => {
+  useEffect(() => {
     function escapeKeydown(evt) {
       if (evt.key === "Escape") {
         props.onClose();
@@ -16,7 +16,7 @@ function ImagePopup(props) {
     };
   });
   return (
-    <div className={`popout-image ${props.card.link ? "active" : ""}`}>
+    <div className={`popout-image ${props.isOpen ? "active" : ""}`}>
       <button
         className={`popout-image__button-close`}
         type="button"

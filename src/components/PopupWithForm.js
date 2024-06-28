@@ -1,16 +1,14 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import closeButtonPath from "../images/close-icon.svg";
 
 function PopupWithForm(props) {
-  React.useEffect(() => {
+  useEffect(() => {
     function escapeKeydown(evt) {
       if (evt.key === "Escape") {
         props.onClose();
       }
     }
-
     document.addEventListener("keydown", escapeKeydown);
-
     return () => {
       document.removeEventListener("keydown", escapeKeydown);
     };
@@ -27,7 +25,10 @@ function PopupWithForm(props) {
         >
           <img src={closeButtonPath} alt="Boton de cerrar" className="close" />
         </button>
-        <form className={`popout-${props.name}__form form`}>
+        <form
+          className={`popout-${props.name}__form form`}
+          onSubmit={props.onSubmit}
+        >
           {props.children}
           <button
             className={`popout-${props.name}__button-save form__submit`}
