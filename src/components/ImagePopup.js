@@ -14,7 +14,7 @@ function ImagePopup(props) {
     return () => {
       document.removeEventListener("keydown", escapeKeydown);
     };
-  });
+  }, []);
   return (
     <div className={`popout-image ${props.isOpen ? "active" : ""}`}>
       <button
