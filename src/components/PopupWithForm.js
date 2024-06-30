@@ -12,7 +12,7 @@ function PopupWithForm(props) {
     return () => {
       document.removeEventListener("keydown", escapeKeydown);
     };
-  });
+  }, []);
 
   return (
     <div>
